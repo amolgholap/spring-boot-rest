@@ -5,5 +5,13 @@ server:
 ---
 spring:
   profiles: default
-  jmx.enabled: false
+  #jmx.enabled: false
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/postgres
+    username: postgres
+    password: Common@123
+    driver-class-name: org.postgresql.Driver
+security:
+  basic:
+    enabled: false
   
