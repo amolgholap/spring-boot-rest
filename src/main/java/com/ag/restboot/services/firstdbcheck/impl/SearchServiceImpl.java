@@ -26,7 +26,7 @@ public class SearchServiceImpl implements SearchService{
 		try {
 			//searchDAO = (SearchServiceDao) SpringApplicationContext.getBean("SearchServiceDaoImpl");
 			result = searchDAO.getSearchResultsTest(searchParam);
-			System.out.println(result);
+			logger.info(" out put "+result);
 
 		} catch (Exception e) {
 			logger.error("error in ProductConfiguratorDataServiceImpl: testAutowiring() exception  :  " + e);

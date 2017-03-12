@@ -1,14 +1,18 @@
 package com.ag.restboot.rest;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +25,6 @@ import com.ag.restboot.services.firstdbcheck.SearchService;
 import com.ag.restboot.services.firstdbcheck.impl.SearchServiceImpl;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.apache.log4j.Logger;
 
 
 //import com.ge.titandatamining.service.configurator.impl.SearchServiceImpl;
@@ -45,7 +48,7 @@ import org.apache.log4j.Logger;
 @RestController
 public class Controller {
 
-	private static final Logger logger = Logger.getLogger(Controller.class);
+	private static final Logger logger = LoggerFactory.getLogger(Controller.class);
 
 	/**
      * 
@@ -61,7 +64,7 @@ public class Controller {
 	 *            - the string to echo back
 	 * @return -
 	 */
-	@SuppressWarnings("nls")
+	//@SuppressWarnings("nls")
 	@RequestMapping("/")
 	public String index(
 			@RequestParam(value = "echo", defaultValue = "echo") String echo) {
@@ -221,5 +224,20 @@ public class Controller {
 	 * logger.info("EXIT:ProductConfiguratorDataServiceImpl:getShipToDetails");
 	 * return result; }
 	 */
+	@Scheduled(fixedRate = 10000)
+    public void reportCurrentTime() {
+		// TODO Auto-generated method stub
+		logger.info("ENTER:ProductConfiguratorDataServiceImpl:getSearchResults");
+		try {
+			TitanDMSearchParam searchParam= new TitanDMSearchParam();
+			logger.info("Search Parameter: " + searchParam);
+			//result = searchService.testAutowiring(searchParam);
+
+		} catch (Exception e) {
+			logger.error("error in ProductConfiguratorDataServiceImpl: getSearchResults() exception  :  "
+					+ e);
+		}
+		logger.info("EXIT:ProductConfiguratorDataServiceImpl:getSearchResults");
+	}
 
 }
