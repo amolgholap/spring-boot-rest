@@ -10,6 +10,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -25,13 +26,16 @@ public class SearchServiceDaoImpl implements SearchServiceDao{
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	public JdbcTemplate getJdbcTemplate() {
+	/*public JdbcTemplate getJdbcTemplate() {
 		return jdbcTemplate;
 	}
 
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
-	}
+	}*/
+	
+	@Value("${db.firstdbcheck.user.selectall}")
+    private String allUser;
 	
 	@Override
 	public String getSearchResultsTest(TitanDMSearchParam searchParam) {
@@ -47,7 +51,7 @@ public class SearchServiceDaoImpl implements SearchServiceDao{
 		try {
 
 			List<Map<String, Object>> moreInfoList = jdbcTemplate
-					.queryForList(query);
+					.queryForList(allUser);
 			HashMap<String, ArrayList<Integer>> hmWaterTypeGrid = new HashMap<String, ArrayList<Integer>>();
 			int iList = 0;
 			for (Map<String, Object> moreInfoMap : moreInfoList) {
