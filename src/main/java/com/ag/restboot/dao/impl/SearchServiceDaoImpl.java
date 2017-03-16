@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import com.ag.restboot.bean.firstdbcheck.TitanDMSearchParam;
+import com.ag.restboot.bean.firstdbcheck.SearchParam;
 import com.ag.restboot.dao.SearchServiceDao;
 
 @Component
@@ -38,7 +38,7 @@ public class SearchServiceDaoImpl implements SearchServiceDao{
     private String allUser;
 	
 	@Override
-	public String getSearchResultsTest(TitanDMSearchParam searchParam) {
+	public String getSearchResultsTest(SearchParam searchParam) {
 		//logger.info("ENTER:SearchServiceDaoImpl:getSearchResultsTest");
 		String result = "";
 		// String query =

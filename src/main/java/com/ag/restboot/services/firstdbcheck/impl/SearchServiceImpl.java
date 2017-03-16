@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ag.restboot.bean.firstdbcheck.TitanDMSearchParam;
+import com.ag.restboot.bean.firstdbcheck.SearchParam;
 import com.ag.restboot.dao.SearchServiceDao;
 import com.ag.restboot.dao.impl.SearchServiceDaoImpl;
 import com.ag.restboot.services.firstdbcheck.SearchService;
@@ -19,7 +19,7 @@ public class SearchServiceImpl implements SearchService{
 	private SearchServiceDao searchDAO;
 	
 	@Override
-	public String testAutowiring(TitanDMSearchParam searchParam) {
+	public String testAutowiring(SearchParam searchParam) {
 		// TODO Auto-generated method stub
 		String result="";
 		logger.info("testAutowiring");
@@ -36,7 +36,7 @@ public class SearchServiceImpl implements SearchService{
 	}
 
 	@Override
-	public TitanDMSearchParam getSearchResults(TitanDMSearchParam objtm) {
+	public SearchParam getSearchResults(SearchParam objtm) {
 		// TODO Auto-generated method stub
 		return null;
 	}

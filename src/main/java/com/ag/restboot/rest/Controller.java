@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,27 +18,29 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ag.restboot.bean.firstdbcheck.GridSearchParam;
-import com.ag.restboot.bean.firstdbcheck.TitanDMSearchParam;
+import com.ag.restboot.bean.firstdbcheck.SearchParam;
 import com.ag.restboot.services.firstdbcheck.SearchService;
 import com.ag.restboot.services.firstdbcheck.impl.SearchServiceImpl;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 
 //import com.ge.titandatamining.service.configurator.impl.SearchServiceImpl;
 //import com.ge.titandatamining.vo.GridSearchParam;
 //import com.ge.titandatamining.vo.SavedSearchParam;
-//import com.ge.titandatamining.vo.TitanDMSearchParam;
+//import com.ge.titandatamining.vo.SearchParam;
 
 /*import com.ge.titandatamining.framework.SpringApplicationContext;
  import com.ge.titandatamining.service.configurator.impl.SearchServiceImpl;
  import com.ge.titandatamining.util.TDMConstants;
  import com.ge.titandatamining.vo.GridSearchParam;
- import com.ge.titandatamining.vo.TitanDMSearchParam;*/
+ import com.ge.titandatamining.vo.SearchParam;*/
 
 /**
  * An example of creating a Rest api using Spring Annotations @RestController.
@@ -83,7 +87,7 @@ public class Controller {
 	 * RequestMethod.POST,consumes
 	 * =MediaType.APPLICATION_JSON_VALUE,produces=MediaType
 	 * .APPLICATION_JSON_VALUE) public String getSearchResults(@RequestBody
-	 * TitanDMSearchParam searchParam) { // TODO Auto-generated method stub
+	 * SearchParam searchParam) { // TODO Auto-generated method stub
 	 * logger.info("ENTER:ProductConfiguratorDataServiceImpl:getSearchResults");
 	 * try { //SpringApplicationContext =Application.ctx; searchService =
 	 * (SearchServiceImpl)
@@ -98,7 +102,7 @@ public class Controller {
 	 * return result; }
 	 */
 	@RequestMapping(value = "/testAutowiring", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public String testAutowiring(@RequestBody TitanDMSearchParam searchParam) {
+	public String testAutowiring(@RequestBody SearchParam searchParam) {
 		// TODO Auto-generated method stub
 		logger.info("ENTER:ProductConfiguratorDataServiceImpl:getSearchResults");
 		try {
@@ -117,7 +121,7 @@ public class Controller {
 	}
 
 	@RequestMapping(value = "/readJsonTest", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public String readJsonTest(@RequestBody TitanDMSearchParam searchParam) {
+	public String readJsonTest(@RequestBody SearchParam searchParam) {
 		// TODO Auto-generated method stub
 		logger.info("ENTER:ProductConfiguratorDataServiceImpl:getSearchResults");
 		try {
@@ -146,8 +150,8 @@ public class Controller {
 
 	@RequestMapping(value = "getSearchTest", method = RequestMethod.GET)
 	public @ResponseBody
-	TitanDMSearchParam getSearchJsonTest() {
-		TitanDMSearchParam titanDMSearchParam = new TitanDMSearchParam();
+	SearchParam getSearchJsonTest() {
+		SearchParam SearchParam = new SearchParam();
 		GridSearchParam gridSearchParam = new GridSearchParam();
 		gridSearchParam.setMin(0);
 		gridSearchParam.setMax(0);
@@ -157,14 +161,22 @@ public class Controller {
 		gridSearchParam1.setMax(1);
 		gridSearchParam1.setParam("Alk");
 
-		titanDMSearchParam.setGrid("99");
-		titanDMSearchParam.setWaterType("Boiling System");
+		SearchParam.setGrid("99");
+		SearchParam.setWaterType("Boiling System");
 		ArrayList<GridSearchParam> alGridSearchParam = new ArrayList<GridSearchParam>();
 		alGridSearchParam.add(gridSearchParam);
 		alGridSearchParam.add(gridSearchParam1);
-		titanDMSearchParam.setGridSearchParamList(alGridSearchParam);
+		SearchParam.setGridSearchParamList(alGridSearchParam);
 
-		return titanDMSearchParam;
+		return SearchParam;
+	}
+	@RequestMapping(value = "uploadFileWithFormData", method = RequestMethod.POST,consumes={MediaType.MULTIPART_FORM_DATA_VALUE},produces={MediaType.APPLICATION_JSON_VALUE})
+	public @ResponseBody
+	SearchParam uploadFileWithFormData(@RequestPart("uploadfile")MultipartFile uploadfile,HttpServletRequest request) {
+		String fileName=uploadfile.getOriginalFilename();
+		System.out.println(" fileName "+fileName);
+		System.out.println("Payload "+ request.getParameter("jsonpayload"));
+		return null;
 	}
 	/*
 	 * @RequestMapping(value = "getGridOfWaterType", method = RequestMethod.GET)
@@ -224,20 +236,21 @@ public class Controller {
 	 * logger.info("EXIT:ProductConfiguratorDataServiceImpl:getShipToDetails");
 	 * return result; }
 	 */
-	@Scheduled(fixedRate = 10000)
+	//@Scheduled(cron = "45 23 1/1 * ? *")
+	@Scheduled(cron = "0 52 23 * * ?")
     public void reportCurrentTime() {
 		// TODO Auto-generated method stub
-		logger.info("ENTER:ProductConfiguratorDataServiceImpl:getSearchResults");
+		logger.info("ENTER:ProductConfiguratorDataServiceImpl:reportCurrentTime");
 		try {
-			TitanDMSearchParam searchParam= new TitanDMSearchParam();
+			SearchParam searchParam= new SearchParam();
 			logger.info("Search Parameter: " + searchParam);
 			//result = searchService.testAutowiring(searchParam);
 
 		} catch (Exception e) {
-			logger.error("error in ProductConfiguratorDataServiceImpl: getSearchResults() exception  :  "
+			logger.error("error in ProductConfiguratorDataServiceImpl: reportCurrentTime() exception  :  "
 					+ e);
 		}
-		logger.info("EXIT:ProductConfiguratorDataServiceImpl:getSearchResults");
+		logger.info("EXIT:ProductConfiguratorDataServiceImpl:reportCurrentTime");
 	}
 
 }

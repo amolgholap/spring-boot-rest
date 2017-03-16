@@ -1,10 +1,10 @@
 package com.ag.restboot.services.firstdbcheck;
 
-import com.ag.restboot.bean.firstdbcheck.TitanDMSearchParam;
+import com.ag.restboot.bean.firstdbcheck.SearchParam;
 
 public interface SearchService {
 
-	String testAutowiring(TitanDMSearchParam searchParam);
+	String testAutowiring(SearchParam searchParam);
 
-	TitanDMSearchParam getSearchResults(TitanDMSearchParam objtm);
+	SearchParam getSearchResults(SearchParam objtm);
 }

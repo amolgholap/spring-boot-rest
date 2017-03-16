@@ -2,7 +2,7 @@ package com.ag.restboot.bean.firstdbcheck;
 
 import java.util.ArrayList;
 
-public class TitanDMSearchParam {
+public class SearchParam {
 
 	private String grid;
 	private String WaterType;
