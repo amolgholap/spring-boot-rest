@@ -252,5 +252,19 @@ public class Controller {
 		}
 		logger.info("EXIT:ProductConfiguratorDataServiceImpl:reportCurrentTime");
 	}
+	@RequestMapping(value = "/getUserDetails", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String getUserDetails(@RequestBody SearchParam searchParam) {
+		logger.info("ENTER:ProductConfiguratorDataServiceImpl:getUserDetails");
+		try {
+			logger.info("Search Parameter: " + searchParam);
+			result = searchService.getUserDetails(searchParam);
+
+		} catch (Exception e) {
+			logger.error("error in ProductConfiguratorDataServiceImpl: getUserDetails() exception  :  "
+					+ e);
+		}
+		logger.info("EXIT:ProductConfiguratorDataServiceImpl:getUserDetails");
+		return result;
+	}
 
 }

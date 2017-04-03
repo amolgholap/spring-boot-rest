@@ -7,4 +7,6 @@ public interface SearchService {
 	String testAutowiring(SearchParam searchParam);
 
 	SearchParam getSearchResults(SearchParam objtm);
+
+	String getUserDetails(SearchParam searchParam);
 }

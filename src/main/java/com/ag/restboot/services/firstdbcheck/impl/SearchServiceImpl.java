@@ -20,7 +20,6 @@ public class SearchServiceImpl implements SearchService{
 	
 	@Override
 	public String testAutowiring(SearchParam searchParam) {
-		// TODO Auto-generated method stub
 		String result="";
 		logger.info("testAutowiring");
 		try {
@@ -39,6 +38,22 @@ public class SearchServiceImpl implements SearchService{
 	public SearchParam getSearchResults(SearchParam objtm) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public String getUserDetails(SearchParam searchParam) {
+		String result="";
+		logger.info("ENTER:SearchServiceImpl:getUserDetails");
+		try {
+			//searchDAO = (SearchServiceDao) SpringApplicationContext.getBean("SearchServiceDaoImpl");
+			result = searchDAO.getUserDetails(searchParam);
+			logger.info(" out put "+result);
+
+		} catch (Exception e) {
+			logger.error("error in SearchServiceImpl: getUserDetails() exception  :  " + e);
+		}
+		logger.info("EXIT:SearchServiceImpl:getUserDetails");
+		return result;
 	}
 
 }
