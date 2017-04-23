@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,7 @@ import com.ag.restboot.bean.firstdbcheck.GridSearchParam;
 import com.ag.restboot.bean.firstdbcheck.SearchParam;
 import com.ag.restboot.services.firstdbcheck.SearchService;
 import com.ag.restboot.services.firstdbcheck.impl.SearchServiceImpl;
+import com.ag.restboot.util.resttemplate.HandleRestCalls;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -254,7 +256,7 @@ public class Controller {
 	}
 	@RequestMapping(value = "/getUserDetails", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public String getUserDetails(@RequestBody SearchParam searchParam) {
-		logger.info("ENTER:ProductConfiguratorDataServiceImpl:getUserDetails");
+		logger.info("ENTER:ProductConfiguratorDataServiceImpl: getUserDetails");
 		try {
 			logger.info("Search Parameter: " + searchParam);
 			result = searchService.getUserDetails(searchParam);
@@ -263,7 +265,22 @@ public class Controller {
 			logger.error("error in ProductConfiguratorDataServiceImpl: getUserDetails() exception  :  "
 					+ e);
 		}
-		logger.info("EXIT:ProductConfiguratorDataServiceImpl:getUserDetails");
+		logger.info("EXIT:ProductConfiguratorDataServiceImpl: getUserDetails");
+		return result;
+	}
+	@RequestMapping(value = "/getUserDetailsFromRestCall", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String getUserDetailsFromRestCall(@RequestBody SearchParam searchParam) {
+		logger.info("ENTER:ProductConfiguratorDataServiceImpl: getUserDetailsFromRestCall");
+		try {
+			logger.info("Search Parameter: " + searchParam);
+			HandleRestCalls restcalls = new HandleRestCalls();
+			result = restcalls.Execute("http://localhost:8090/getUserDetails", HttpMethod.POST, searchParam);
+			
+		} catch (Exception e) {
+			logger.error("error in ProductConfiguratorDataServiceImpl: getUserDetailsFromRestCall() exception  :  "
+					+ e);
+		}
+		logger.info("EXIT:ProductConfiguratorDataServiceImpl: getUserDetailsFromRestCall");
 		return result;
 	}
 
